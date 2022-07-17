@@ -1,116 +1,13 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{template :: layout(~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8" />
-	<title>Spring Boot Thymeleaf Application - Bootstrap DataTable</title>
+	<title>Jira Data Exporter</title>
 </head>
 
-<body th:fragment="section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 mt-5 mb-5">
-				<h3>Datatable using list of Objects in data parameter</h3>
-				<table id="example" class="table table-bordered table-responsive" style="width: 100%">
-					<caption>Worklogs</caption>
-					<thead>
-						<tr>
-							<th scope="col">Author</th>
-							<th scope="col">Position</th>
-							<th scope="col">Office</th>
-							<th scope="col">Start date</th>
-							<th scope="col">Salary</th>
-							<th scope="col">Salary</th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
-							<th scope="col">Name</th>
-							<th scope="col">Position</th>
-							<th scope="col">Office</th>
-							<th scope="col">Start date</th>
-							<th scope="col">Salary</th>
-							<th scope="col">Salary</th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-		</div>
-		<div id="like_button_container"></div>
-
-
-		<div id="app">
-			{{ message }}
-			<table id="example" class="table table-bordered table-responsive" style="width: 100%">
-				<caption>Worklogs</caption>
-				<thead>
-					<tr>
-						<th scope="col">Author</th>
-						<th scope="col">Position</th>
-						<th scope="col">Office</th>
-						<th scope="col">Start date</th>
-						<th scope="col">Salary</th>
-						<th scope="col">Salary</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="wl in worklogs">
-						<th scope="col">{{ wl.author }}</th>
-						<th scope="col">Position</th>
-						<th scope="col">Office</th>
-						<th scope="col">Start date</th>
-						<th scope="col">Salary</th>
-						<th scope="col">Salary</th>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-		<script>
-			const {createApp} = Vue
-			createApp({
-				data() {
-					fetch("/api/worklogs").then((res) => {
-						return {
-							message: 'Hello Vue!',
-							worklogs: res.contant
-						}
-					})
-				}
-			}).mount('#app')
-		</script>
-	</div>
-	<script>
-		$('#example').DataTable({
-			"processing": true,
-			"serverSide": true,
-			"ajax": {
-				"url": "/api/worklogs",
-				"type": "GET",
-				"dataType": "json",
-				"contentType": "application/json",
-				"data": function (request) {
-					var req = {};
-					req.page = request.start / request.length;
-					req.size = request.length;
-					req.sort = request.order.map(o => request.columns[o.column].data + ',' + o.dir);
-					return $.param(req);
-				},
-				"dataSrc": function (response) {
-					return response.content;
-				}
-			},
-			"columns": [
-				{"data": "author", "width": "20%"},
-				{"data": "project", "width": "10%"},
-				{"data": "issue", "width": "10%"},
-				{"data": "startdate", "width": "20%"},
-				{"data": "timeworked", "width": "10%"},
-				{"data": "body", "width": "30%"}
-			]
-		});
-	</script>
-	<script src="like_button.js"></script>
+<body>
+<span th:text="${welcome}">Hello World!</span>
 </body>
 
 </html>
