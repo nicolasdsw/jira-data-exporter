@@ -8,14 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.firedev.datatable.Datatable;
-import br.com.firedev.datatable.PagingRequest;
 import br.com.firedev.dto.OptionDTO;
 import br.com.firedev.repository.IssueRepository;
 import br.com.firedev.repository.ProjectRepository;
@@ -47,16 +43,6 @@ public class WorklogController {
 		var spec = this.mapper.toSpec(filter);
 		var list = this.repository.findAll(spec, PageUtil.validateAndReplaceSorts(WorklogResDTO.sortFields(), pageable));
 		return list.map(mapper::toDto);
-	}
-
-	@PostMapping("/datatable")
-	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "Find Worklogs", description = "Find worklogs by filters in JIRA", tags = { "worklogs" })
-	@WorklogFilterQP
-	public Datatable<WorklogResDTO> datatable(@RequestBody PagingRequest pagingRequest) {
-		var spec = this.mapper.toSpec(null);
-		var list = this.repository.findAll(spec, Pageable.unpaged());
-		return new Datatable<>(pagingRequest, list.map(mapper::toDto));
 	}
 
 	@GetMapping("/export.xlsx")

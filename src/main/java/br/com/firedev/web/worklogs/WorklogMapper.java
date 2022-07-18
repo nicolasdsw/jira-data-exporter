@@ -86,7 +86,8 @@ public class WorklogMapper {
 		sheet.autoSizeColumn(1);
 		sheet.autoSizeColumn(2);
 		sheet.autoSizeColumn(3);
-		sheet.setColumnWidth(4, 50 * 256);
+		sheet.autoSizeColumn(4);
+		sheet.setColumnWidth(5, 50 * 256);
 		return xlsx;
 	}
 }
